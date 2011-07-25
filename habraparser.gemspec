@@ -24,6 +24,6 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'http://github.com/blackfoks/habraparser'
   
   # dependencies
-  s.add_dependency('nokogiri', '>= 1.4.4')
+  s.add_dependency('nokogiri', '>= 1.5.0')
   
 end

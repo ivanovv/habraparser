@@ -2,14 +2,13 @@ require 'spec_helper'
 
 describe Habr do
   
-  describe ".user_agent" do
-    
-    it "should be 'Mozilla/5.0' by default" do
-      Habr.user_agent.should == 'Mozilla/5.0'
-    end
-    
-  end
+  its(:user_agent) { should_not be_nil }
+  its(:user_agent) { should == 'Mozilla/5.0' }
   
-  it "should open a habrapage"
+  # it "user_agent should be changable"
+  
+  it "should open a habrapage" do
+    Habr.open_page('http://habrahabr.ru').should be_html
+  end
   
 end

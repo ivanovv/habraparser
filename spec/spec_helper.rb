@@ -1,1 +1,1 @@
-require "habr"
+require "habraparser"

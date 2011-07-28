@@ -27,7 +27,7 @@ Usage with Rails:
     class Post < ActiveRecord::Base
       # ...
       
-      # fetches post from habr, saves it and then return it
+      # fetches post from habr, saves it and then returns it
       def self.fetch(id)
         # find post on habr
         hpost = Habr::Post.find id
@@ -40,7 +40,7 @@ Usage with Rails:
             :title => hpost.blog_title
           ),
           # find habrauser in db or save it with given data
-          :habrauser => Habrauser.find_or_save(
+          :author => Habrauser.find_or_save(
             :slug => hpost.author_slug,
             :name => hpost_author_name
           )

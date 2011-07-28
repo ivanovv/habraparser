@@ -2,12 +2,12 @@ spec = Gem::Specification.new do |s|
   
   # about
   s.name = 'habraparser'
-  s.version = '0.0.1'
+  s.version = '0.0.2'
   s.summary = 'Habrahabr ruby parser.'
   s.description = %{Habrahabr parser is intended to get data from http://habrahabr.ru}
   
   # gem files
-  s.files = ['README', 'lib/habraparser.rb']
+  s.files = ['README.md', 'lib/habraparser.rb', 'lib/user.rb']
   
   # rdoc status
   s.has_rdoc = true

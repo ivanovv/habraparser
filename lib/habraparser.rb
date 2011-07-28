@@ -3,6 +3,8 @@ require 'open-uri'
 
 module Habr
   
+  autoload :User, 'user.rb'
+  
   # Returns default user agent
   def self.user_agent
     "Mozilla/5.0"

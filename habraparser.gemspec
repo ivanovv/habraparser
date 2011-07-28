@@ -7,11 +7,7 @@ spec = Gem::Specification.new do |s|
   s.description = %{Habrahabr parser is intended to get data from http://habrahabr.ru}
   
   # gem files
-  s.files = ['README']
-  
-  # requiring
-  s.require_path = 'lib'
-  s.autorequire = 'habr'
+  s.files = ['README', 'lib/habraparser.rb']
   
   # rdoc status
   s.has_rdoc = true
@@ -25,5 +21,6 @@ spec = Gem::Specification.new do |s|
   
   # dependencies
   s.add_dependency('nokogiri', '>= 1.5.0')
+  s.add_development_dependency('rspec')
   
 end

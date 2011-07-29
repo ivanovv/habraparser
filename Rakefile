@@ -24,3 +24,15 @@ end
 task :tests do
   sh 'rspec spec/ --format doc'
 end
+
+namespace :test do
+  
+  task :fav do
+    sh 'rspec spec/fav_spec.rb --format doc'
+  end
+  
+  task :user do
+    sh 'rspec spec/user_spec.rb --format doc'
+  end
+  
+end

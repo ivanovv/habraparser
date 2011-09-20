@@ -1,0 +1,78 @@
+module Habr
+  class UserFavs
+    attr_reader :userslug
+
+    # opts:
+    #  * :userslug => favorites belongs to a user with this slug
+    #  * :username => favorites belongs to a user with this name
+    def initialize(opts={})
+      @userslug = opts[:userslug] || Habr::Helper.name_to_slug(opts[:username])
+    end
+
+    # Gets number of user's favorites (based upon number on user's page).
+    def count
+      @count ||= get_count
+    end
+
+    # Iterates over all user's favorites.
+    def each(&block)
+      pages.each { |page| page.favs.each(&block) }
+    end
+
+    # Gets pages with favorites
+    def pages
+      @pages ||= get_pages
+    end
+
+    private
+
+      # Returns count of user's favs
+      def get_count
+        userpage = Habr::open_page(Habr::Links.userpage(@userslug))
+        # get text with favs count
+        text_str = userpage.xpath(".//*[@id='main-content']/div[2]/div/ul/li[3]/a").text
+        # extract count
+        count = text_str.scan(/\d+/).first || 0
+        # convert to int
+        count.to_i
+      end
+
+      # Returns pages with favorites
+      def get_pages
+        (1..page_count).map { |n| Habr::FavsPage.new(n, :userslug => @userslug) }
+      end
+
+      # Gets a number of pages based upon paginator on user's page.
+      def page_count
+        @page_count ||= get_page_count
+      end
+
+      # Returns a number of pages based upon paginator on user's page.
+      def get_page_count
+        first_page = Habr::open_page(Habr::Links.favorites(@userslug))
+        count = 1
+
+        last_page_links = first_page.xpath(".//*[@id='nav-pages']/li/noindex/a")
+
+        if last_page_links.count > 0
+          last_page_links.each do |last_page_link|
+            last_page_href = last_page_link[:href]
+             # extract number
+            /.*\/favorites\/page(?<last_page_num>[0-9]+)\// =~ last_page_href
+            count = Integer(last_page_num)
+          end
+        else # if no last page links found... (that means fav pages count <= 6)
+          page_links = first_page.css("#nav-pages>li>a")
+          page_indicies = []
+          page_links.each do |page_link|
+            /.*\/favorites\/page(?<fav_page_index>[0-9]+)\// =~ page_link[:href]
+            page_indicies << Integer(fav_page_index)
+          end
+          count = page_indicies.max if !page_indicies.empty?
+        end
+
+        count
+      end
+
+  end
+end

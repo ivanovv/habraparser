@@ -1,9 +1,14 @@
 require 'nokogiri'
 require 'open-uri'
+$: << File.dirname(__FILE__)
 
 module Habr
   
   autoload :User, 'user.rb'
+  autoload :Fav, 'fav.rb'
+  autoload :FavsPage, 'favs_page.rb'
+  autoload :Links, 'links.rb'
+  autoload :Helper, 'helper.rb'
   
   # Returns default user agent
   def self.user_agent

@@ -1,26 +1,22 @@
-spec = Gem::Specification.new do |s|
+$:.push File.expand_path("../lib", __FILE__)
+require "habraparser/version"
+
+Gem::Specification.new do |s|
+  s.name        = "habraparser"
+  s.version     = Habr::VERSION
+  s.authors     = ["blackfoks"]
+  s.email       = ["mail@blackfoks.com"]
+  s.homepage    = "http://github.com/blackfoks/habraparser"
+  s.summary     = %q{Habrahabr ruby parser.}
+  s.description = %q{Habrahabr parser is intended to get data from http://habrahabr.ru}
   
-  # about
-  s.name = 'habraparser'
-  s.version = '0.0.2'
-  s.summary = 'Habrahabr ruby parser.'
-  s.description = %{Habrahabr parser is intended to get data from http://habrahabr.ru}
+  s.rubyforge_project = "habraparser"
   
-  # gem files
-  s.files = ['README.md', 'lib/habraparser.rb', 'lib/user.rb']
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
   
-  # rdoc status
-  s.has_rdoc = true
-  
-  # author
-  s.author = 'blackfoks'
-  s.email = 'mail@blackfoks.com'
-  
-  # gem homepage
-  s.homepage = 'http://github.com/blackfoks/habraparser'
-  
-  # dependencies
-  s.add_dependency('nokogiri', '>= 1.5.0')
-  s.add_development_dependency('rspec')
-  
+  s.add_runtime_dependency "nokogiri"
+  s.add_development_dependency "rspec"
 end

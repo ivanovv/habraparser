@@ -1,6 +1,5 @@
 require 'nokogiri'
 require 'open-uri'
-$: << File.dirname(__FILE__)
 
 module Habr
   

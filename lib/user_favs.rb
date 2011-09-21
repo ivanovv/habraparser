@@ -1,5 +1,6 @@
 module Habr
   class UserFavs
+    MinPageNumber = 1
     attr_reader :userslug
 
     # opts:
@@ -52,26 +53,21 @@ module Habr
         first_page = Habr::open_page(Habr::Links.favorites(@userslug))
         count = 1
 
-        last_page_links = first_page.xpath(".//*[@id='nav-pages']/li/noindex/a")
+        last_page_link = first_page.xpath(".//*[@id='nav-pages']/li/noindex/a").first
 
-        if last_page_links.count > 0
-          last_page_links.each do |last_page_link|
-            last_page_href = last_page_link[:href]
-             # extract number
-            /.*\/favorites\/page(?<last_page_num>[0-9]+)\// =~ last_page_href
-            count = Integer(last_page_num)
-          end
-        else # if no last page links found... (that means fav pages count <= 6)
-          page_links = first_page.css("#nav-pages>li>a")
-          page_indicies = []
-          page_links.each do |page_link|
-            /.*\/favorites\/page(?<fav_page_index>[0-9]+)\// =~ page_link[:href]
-            page_indicies << Integer(fav_page_index)
-          end
-          count = page_indicies.max if !page_indicies.empty?
+        if last_page_link
+          count = get_page_number_from_url(last_page_link[:href])
+        else # no last page link found (that means fav pages count <= 6)
+          page_urls = first_page.css("#nav-pages>li>a").map { |link| link[:href] }
+          page_numbers = page_urls.map { |url| get_page_number_from_url(url) }
+          count = page_numbers.max unless page_numbers.empty?
         end
 
         count
+      end
+
+      def get_page_number_from_url(url)
+        (url.scan(/\d+/).last || MinPageNumber).to_i
       end
 
   end

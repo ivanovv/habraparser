@@ -1,33 +1,18 @@
 require 'spec_helper'
 
 describe "Habr::Fav" do
+  subject {
+    Habr::Fav.new :blog_slug => "ror", :blog_title => "Ruby on Rails",
+      :post_id => "128645", :post_title => "Some Title", :author_name => "BlackFoks",
+      :post_url => "http://habrahabr.ru/blogs/ror/128645/"
+  }
 
-  it "should accept :post_title" do
-    fav = Habr::Fav.new(:post_title => "Some Title")
-    fav.post_title.should == "Some Title"
-  end
+  its(:blog_slug) { should == "ror" }
+  its(:blog_title) { should == "Ruby on Rails" }
+  its(:post_id) { should == 128645 }
+  its(:post_title) { should == "Some Title" }
+  its(:author_name) { should == "BlackFoks" }
+  its(:post_url) { should == "http://habrahabr.ru/blogs/ror/128645/" }
+  its(:post_href) { should == "http://habrahabr.ru/blogs/ror/128645/" }
 
-  it "should accept :post_href" do
-    fav = Habr::Fav.new(:post_href => "http://habr.ru/posts/123")
-    fav.post_href.should == "http://habr.ru/posts/123"
-  end
-
-  # it "find last fav for user"
-  #   it "find first fav for user"
-  #   it "find specified fav for user"
-  #   it "has a post title"
-  #   it "belongs to user"
-  #   it "has a blog title"
-  #
-  #   it "can be found via user" # do
-  #   # favs for blacfoks
-  #   favs = Habr::Fav.for_user('blackfoks')
-  #   favs.should_not be_nil
-  #   favs.should_not be_empty
-  # end
-
-  # let(:bf_last_fav) { Habr::Fav.find :last, :user => 'blackfoks' }
-  # specify { bf_last_fav.should_not be_nil }
-  # specify { bf_last_fav.post_title.should_not be_nil }
-  # specify { bf_last_fav.blog_title.should_not be_nil }
 end

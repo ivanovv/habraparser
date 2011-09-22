@@ -18,6 +18,10 @@ module Habr
         end
       end
 
+      def post(id)
+        "http://habrahabr.ru/post/#{id}/"
+      end
+
     end
   end
 end

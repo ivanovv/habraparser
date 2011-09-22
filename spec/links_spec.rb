@@ -26,4 +26,10 @@ describe Habr::Links do
     end
   end
 
+  it "should have post link" do
+    { 128922 => "http://habrahabr.ru/post/128922/" }.each do |id, url|
+      subject.post(id).should == url
+    end
+  end
+
 end

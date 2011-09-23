@@ -15,6 +15,10 @@ module Habr
       @post_id = val.to_i
     end
 
+    def post
+      @post ||= Habr::Post.find(post_id)
+    end
+
     private
 
       def set_attr_value(name, val)

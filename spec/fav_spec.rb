@@ -14,5 +14,6 @@ describe "Habr::Fav" do
   its(:author_name) { should == "BlackFoks" }
   its(:post_url) { should == "http://habrahabr.ru/blogs/ror/128645/" }
   its(:post_href) { should == "http://habrahabr.ru/blogs/ror/128645/" }
+  its(:post) { should_not be_nil }
 
 end

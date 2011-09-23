@@ -8,7 +8,7 @@ require "habraparser/favs_page"
 require "habraparser/links"
 require "habraparser/helper"
 require "habraparser/post"
-
+require "habraparser/blog"
 
 module Habr
   # Returns default user agent

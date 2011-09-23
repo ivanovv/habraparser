@@ -15,11 +15,11 @@ module Habr
     end
 
     def blog_title
-      @blog_title ||= page.css('.blog-header a').first.text
+      @blog_title ||= blog_link.text
     end
 
     def blog_slug
-      @blog_slug ||= page.css('.blog-header a').first[:href].split('/')[-1]
+      @blog_slug ||= blog_link[:href].split('/')[-1]
     end
 
     def author_name
@@ -42,6 +42,11 @@ module Habr
 
       def page
         @page ||= Habr::open_page(Habr::Links.post(@id))
+      end
+
+      def blog_link
+        @blog_link ||= (page.css('.blog-header a').first || # for shared blog
+                        page.css('.company-header .habrauser').first) # for corporate blog
       end
 
   end

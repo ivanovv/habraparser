@@ -38,6 +38,20 @@ module Habr
       @published_at ||= Habr::Helper.parse_datetime(page.css('.published').first.text)
     end
 
+    def known(opts={})
+      @title ||= opts[:title]
+      @author_name ||= opts[:author]
+      @tags ||= opts[:tags]
+      @published_at ||= opts[:published_at]
+
+      if opts[:blog]
+        @blog_slug ||= opts[:blog][:slug]
+        @blog_title ||= opts[:blog][:title]
+      end
+
+      self
+    end
+
     private
 
       def page

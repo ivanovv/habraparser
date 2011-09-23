@@ -32,4 +32,10 @@ describe Habr::Links do
     end
   end
 
+  it "should have blog link" do
+    { 'ror' => "http://habrahabr.ru/blogs/ror/" }.each do |slug, url|
+      subject.blog(slug).should == url
+    end
+  end
+
 end

@@ -22,6 +22,10 @@ module Habr
         "http://habrahabr.ru/post/#{id}/"
       end
 
+      def blog(slug)
+        "http://habrahabr.ru/blogs/#{slug}/"
+      end
+
     end
   end
 end

@@ -22,8 +22,12 @@ module Habr
         "http://habrahabr.ru/post/#{id}/"
       end
 
-      def blog(slug)
-        "http://habrahabr.ru/blogs/#{slug}/"
+      def blog(slug, opts={})
+        if opts[:corporate]
+          "http://habrahabr.ru/company/#{slug}/blog/"
+        else
+          "http://habrahabr.ru/blogs/#{slug}/"
+        end
       end
 
     end

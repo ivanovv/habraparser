@@ -50,8 +50,12 @@ module Habr
             blog_slug = blog_href_parts[-2] if blog_slug == "blog"
           end
 
-          new_favs << Habr::Fav.new(:blog_slug => blog_slug, :post_id => post_id,
-            :post_title => post_title, :post_url => post_href, :blog_title => blog_title)
+          new_fav = Habr::Fav.new :user => @userslug, :post => {
+            :id => post_id, :title => post_title,
+            :blog => { :slug => blog_slug, :title => blog_title }
+          }
+
+          new_favs << new_fav
         end
 
         new_favs

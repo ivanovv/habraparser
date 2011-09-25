@@ -1,19 +1,23 @@
 require 'spec_helper'
 
-describe "Habr::Fav" do
-  subject {
-    Habr::Fav.new :blog_slug => "ror", :blog_title => "Ruby on Rails",
-      :post_id => "128645", :post_title => "Some Title", :author_name => "BlackFoks",
-      :post_url => "http://habrahabr.ru/blogs/ror/128645/"
-  }
+describe Habr::Fav do
+  describe "should be able to use some known information" do
+    subject do
+       Habr::Fav.new :user => 'blackfoks', :post => {
+         :id => "128645", :title => "Some Title", :author => "BlackFoks",
+         :blog => { :slug => "ror", :title => "Ruby on Rails" }
+       }
+     end
 
-  its(:blog_slug) { should == "ror" }
-  its(:blog_title) { should == "Ruby on Rails" }
-  its(:post_id) { should == 128645 }
-  its(:post_title) { should == "Some Title" }
-  its(:author_name) { should == "BlackFoks" }
-  its(:post_url) { should == "http://habrahabr.ru/blogs/ror/128645/" }
-  its(:post_href) { should == "http://habrahabr.ru/blogs/ror/128645/" }
-  its(:post) { should_not be_nil }
+     its(:userslug) { should == 'blackfoks' }
+     its(:post) { should_not be_nil }
+  end
+
+  describe "should work without any additional information" do
+    subject { Habr::Fav.new :user => "alizar", :post => { :id => 128645 } }
+
+    its(:userslug) { should == 'alizar' }
+    its(:post) { should_not be_nil }
+  end
 
 end

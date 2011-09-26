@@ -3,7 +3,8 @@ require 'spec_helper'
 
 describe Habr::Post do
   describe "from shared blogs" do
-    subject { Habr::Post.find 128922 }
+    let(:post) { Habr::Post.find 128922 }
+    subject { post }
 
     it { should_not be_nil }
     it { should have(3).tags }
@@ -14,10 +15,19 @@ describe Habr::Post do
     its(:content) { should_not be_nil }
     its(:published_at) { should == Time.new(2011, 9, 22, 10, 16) }
     its(:author_name) { should == "vol4ok"}
+
+    describe :blog do
+      subject { post.blog }
+      it { should_not be_nil}
+      its(:slug) { should == post.blog_slug }
+      its(:title) { should == post.blog_title }
+      its(:corporate?) { should be_false }
+    end
   end
 
   describe "from corporate blogs" do
-    subject { Habr::Post.find 107398 }
+    let(:post) { Habr::Post.find 107398 }
+    subject { post }
 
     it { should_not be_nil }
     it { should have(8).tags }
@@ -28,6 +38,14 @@ describe Habr::Post do
     its(:content) { should_not be_nil }
     its(:published_at) { should == Time.new(2010, 11, 1, 23, 30) }
     its(:author_name) { should == "alexeysalo"}
+
+    describe :blog do
+      subject { post.blog }
+      it { should_not be_nil}
+      its(:slug) { should == post.blog_slug }
+      its(:title) { should == post.blog_title }
+      its(:corporate?) { should be_true }
+    end
   end
 
   describe "we know something about" do
@@ -39,10 +57,7 @@ describe Habr::Post do
                  :blog => { :title => "Ruby on Rails", :slug => "ror" }
     end
 
-    before(:each) do
-      # mock Habr.open_page
-      Habr.should_not_receive(:open_page) #.and_raise(NotImplementedError)
-    end
+    before(:each) { Habr.should_not_receive(:open_page) }
 
     it { should_not be_nil }
     it { should have(3).tags }

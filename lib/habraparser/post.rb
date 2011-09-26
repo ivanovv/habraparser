@@ -15,11 +15,15 @@ module Habr
     end
 
     def blog_title
-      @blog_title ||= blog_link.text
+     @blog_title ||= blog_link.text
     end
 
     def blog_slug
-      @blog_slug ||= blog_link[:href].split('/')[-1]
+     @blog_slug ||= blog_link[:href].split('/')[-1]
+    end
+
+    def blog
+      @blog ||= get_blog
     end
 
     def author_name
@@ -47,6 +51,7 @@ module Habr
       if opts[:blog]
         @blog_slug ||= opts[:blog][:slug]
         @blog_title ||= opts[:blog][:title]
+        @is_blog_corporate ||= opts[:blog][:corporate]
       end
 
       self
@@ -59,8 +64,22 @@ module Habr
       end
 
       def blog_link
-        @blog_link ||= (page.css('.blog-header a').first || # for shared blog
-                        page.css('.company-header .habrauser').first) # for corporate blog
+        @blog_link if @blog_link
+
+        @is_blog_corporate = false
+        @blog_link = page.css('.blog-header a').first # for shared blog
+
+        unless @blog_link
+          @blog_link = page.css('.company-header .habrauser').first  # for corporate blog
+          @is_blog_corporate = true
+        end
+
+        @blog_link
+      end
+
+      def get_blog
+        new_blog = Habr::Blog.find blog_slug, :corporate => @is_blog_corporate
+        new_blog.known :title => blog_title
       end
 
   end

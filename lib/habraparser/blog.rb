@@ -18,6 +18,13 @@ module Habr
       @corporate
     end
 
+    def known(opts={})
+      @title ||= opts[:title]
+      @corporate ||= opts[:corporate]
+
+      self
+    end
+
     def self.find(slug, opts={})
       Blog.new slug, opts
     end

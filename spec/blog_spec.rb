@@ -54,4 +54,18 @@ describe Habr::Blog do
       end
     end
   end
+
+  describe "we know something about" do
+    subject do
+      blog = Habr::Blog.find 'ror'
+      blog.known :title => "Ruby on Rails", :corporate => false
+    end
+
+    before(:each) { Habr.should_not_receive :open_page }
+
+    it { should_not be_nil }
+    its(:slug) { should == 'ror' }
+    its(:title) { should == "Ruby on Rails" }
+    its(:corporate?) { should be_false }
+  end
 end

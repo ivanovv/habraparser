@@ -74,7 +74,7 @@ module Habr
       # Returns Nokogiri::XmlNode for blog link. Try no find out whether the blog is 
       # corporate or shared.
       def get_blog_link
-        shared_blog_link = page.css('.blog-header a').first
+        shared_blog_link = page.css('.blog_header a').first
         if shared_blog_link
           @corporate = false
           return shared_blog_link

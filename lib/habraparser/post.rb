@@ -11,7 +11,8 @@ module Habr
     end
 
     def title
-      @title ||= page.css('.hentry .entry-title .topic').first.text.strip
+      @title ||= (page.css('.post .title').first || # shared blog
+                  page.css('.hentry .entry-title .topic').first).text.strip # corporate
     end
 
     def blog_title
@@ -27,7 +28,7 @@ module Habr
     end
 
     def author_name
-      @author_name ||= page.css('.vcard.author .nickname span').first.text.strip
+      @author_name ||= page.css('.author a').first.text.strip
     end
 
     def tags
@@ -67,7 +68,7 @@ module Habr
         @blog_link if @blog_link
 
         @is_blog_corporate = false
-        @blog_link = page.css('.blog-header a').first # for shared blog
+        @blog_link = page.css('.blog_header a').first # for shared blog
 
         unless @blog_link
           @blog_link = page.css('.company-header .habrauser').first  # for corporate blog

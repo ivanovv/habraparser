@@ -34,7 +34,7 @@ describe Habr::Post do
     its(:id) { should == 107398 }
     its(:title) { should == "Учет личных финансов: увлекательно и полезно!" }
     its(:blog_slug) { should == "sanuel" }
-    its(:blog_title) { should == "Sanuel" }
+    its(:blog_title) { should == "Блог компании Sanuel" }
     its(:content) { should_not be_nil }
     its(:published_at) { should == Time.new(2010, 11, 1, 23, 30) }
     its(:author_name) { should == "alexeysalo"}

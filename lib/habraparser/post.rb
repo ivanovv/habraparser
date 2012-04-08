@@ -11,8 +11,7 @@ module Habr
     end
 
     def title
-      @title ||= (page.css('.post .title').first || # shared blog
-                  page.css('.hentry .entry-title .topic').first).text.strip # corporate
+      @title ||= page.css('.post .post_title').first.text.strip
     end
 
     def blog_title
@@ -32,11 +31,11 @@ module Habr
     end
 
     def tags
-      @tags ||= page.css('.tags li a').map { |n| n.text.strip }
+      @tags ||= page.css('.tags a').map { |n| n.text.strip }
     end
 
     def content
-      @content ||= page.css('.content').inner_html
+      @content ||= page.css('.post .html_format').inner_html
     end
 
     def published_at
@@ -68,10 +67,10 @@ module Habr
         @blog_link if @blog_link
 
         @is_blog_corporate = false
-        @blog_link = page.css('.blog_header a').first # for shared blog
+        @blog_link = page.css('.hub').first # for shared blog
 
         unless @blog_link
-          @blog_link = page.css('.company-header .habrauser').first  # for corporate blog
+          @blog_link = page.css('.name a').first  # for corporate blog
           @is_blog_corporate = true
         end
 

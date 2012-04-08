@@ -29,14 +29,16 @@ module Habr
       def get_favs
         new_favs = []
 
-        page.css('.hentry a.topic').each do |post_link|
-          blog_link = post_link.parent.css('a.blog').first
+        page.css('.post').each do |post|
+          post_link = post.css(".post_title").first
+          blog_link = post.css('.hub').first
 
           # post info
           post_title = post_link.text
           post_href = post_link[:href]
           href_parts = post_href.split('/')
           post_id = href_parts[-1]
+          tags = post.css(".tags a").map{|tag| tag.text.strip}
 
           # blog info
           blog_title = blog_link.text
@@ -51,7 +53,7 @@ module Habr
           end
 
           new_fav = Habr::Fav.new :user => @userslug, :post => {
-            :id => post_id, :title => post_title,
+            :id => post_id, :title => post_title, :tags => tags,
             :blog => { :slug => blog_slug, :title => blog_title }
           }
 

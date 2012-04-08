@@ -26,7 +26,7 @@ module Habr
         if opts[:corporate]
           "http://habrahabr.ru/company/#{slug}/blog/"
         else
-          "http://habrahabr.ru/blogs/#{slug}/"
+          "http://habrahabr.ru/hub/#{slug}/posts"
         end
       end
 

@@ -34,7 +34,7 @@ describe Habr::Links do
 
   describe "should have blog link" do
     it "for shared blogs" do
-      { 'ror' => "http://habrahabr.ru/blogs/ror/" }.each do |slug, url|
+      { 'ror' => "http://habrahabr.ru/hub/ror/posts" }.each do |slug, url|
         subject.blog(slug, :corporate => false).should == url
       end
     end
@@ -46,7 +46,7 @@ describe Habr::Links do
     end
 
     it "for shared blog by default" do
-      { 'ror' => "http://habrahabr.ru/blogs/ror/" }.each do |slug, url|
+      { 'ror' => "http://habrahabr.ru/hub/ror/posts" }.each do |slug, url|
         subject.blog(slug).should == url
       end
     end

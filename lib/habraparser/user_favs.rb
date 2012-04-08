@@ -29,13 +29,9 @@ module Habr
 
       # Returns count of user's favs
       def get_count
-        userpage = Habr::open_page(Habr::Links.userpage(@userslug))
+        user_page = Habr::open_page(Habr::Links.userpage(@userslug))
         # get text with favs count
-        text_str = userpage.xpath(".//*[@id='main-content']/div[2]/div/ul/li[3]/a").text
-        # extract count
-        count = text_str.scan(/\d+/).first || 0
-        # convert to int
-        count.to_i
+        user_page.css(".left .count").first.text.to_i
       end
 
       # Returns pages with favorites

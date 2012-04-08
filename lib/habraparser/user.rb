@@ -13,7 +13,7 @@ module Habr
 
     # Gets user name (not a slug)
     def name
-      @name ||= userpage.css('.habrauser.silentlink').first.text.strip
+      @name ||= userpage.css('.username a').first.text.strip
     end
 
     # Gets favs info for the user
